@@ -9,6 +9,7 @@ interface ImageContextType {
   savedImages: string[];
   addImage: (url: string) => Promise<void>;
   clearAllImages: () => Promise<void>;
+  loadSavedImages: () => void;
 }
 
 const ImageContext = createContext<ImageContextType | undefined>(undefined);
@@ -26,7 +27,6 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
       if (savedImagesJson) {
         const images = JSON.parse(savedImagesJson);
         setSavedImages(images);
-        preFetchImages(images);
       }
     } catch (error) {
       console.error('Failed to load saved images:', error);
@@ -59,7 +59,7 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
   };
 
   return (
-    <ImageContext.Provider value={{ savedImages, addImage, clearAllImages }}>
+    <ImageContext.Provider value={{ savedImages, addImage, clearAllImages, loadSavedImages }}>
       {children}
     </ImageContext.Provider>
   );

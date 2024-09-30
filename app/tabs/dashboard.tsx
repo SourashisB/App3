@@ -72,13 +72,20 @@ const DashboardScreen: React.FC = () => {
   const uploadToS3 = async (uri: string): Promise<string> => {
     const response = await fetch(uri);
     const blob = await response.blob();
-    const key = `uploads/${Date.now()}.jpg`;
-
+    
+    // Generate a timestamp
+    const timestamp = Date.now().toString();
+    
+    // Remove the first 4 digits and add "photo" at the beginning
+    const modifiedTimestamp = 'photo' + timestamp.slice(4);
+    
+    const key = `uploads/${modifiedTimestamp}.jpg`;
+  
     const params = {
       Bucket: 'modelslab-test-sour',
       Key: key,
       Body: blob,
-      ContentType: '*',
+      ContentType: 'image/jpeg',
     };
     return new Promise((resolve, reject) => {
       s3.upload(params, (err: Error, data: AWS.S3.ManagedUpload.SendData) => {
@@ -87,8 +94,9 @@ const DashboardScreen: React.FC = () => {
           reject('Error uploading image');
         } else {
           // Construct the public URL manually
-          const publicUrl = `https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`;
+          const publicUrl = String(`https://${params.Bucket}.s3.${AWS.config.region}.amazonaws.com/${params.Key}`);
           resolve(publicUrl);
+          console.log(publicUrl);
         }
       });
     });
@@ -106,10 +114,14 @@ const DashboardScreen: React.FC = () => {
       setLoadingText('Saving image...');
       await addImage(editedImageURL);
 
-      FastImage.preload([{ uri: editedImageURL }]);
-      
-      router.push('/tabs/gallery');
-      return editedImageURL;
+      // Navigate to gallery with the new image URL and a timestamp
+      router.push({ 
+        pathname: '/tabs/gallery',
+        params: { 
+          newImageUrl: editedImageURL,
+          timestamp: Date.now()
+        }
+      });
       // You can now use this URL as needed, e.g., save it to your app's state or database  
     } catch (error) {
       console.error('Error processing image:', error);
@@ -125,7 +137,7 @@ const DashboardScreen: React.FC = () => {
       "key": "89qz2rpqbf30b5",
       "prompt": String(prompts[selectedPrompt].prompt),
       "negative_prompt": "bad quality",
-      "init_image": String({imageUri}),
+      "init_image": String(imageUri),
       "samples": "1",
       "temp": false,
       "safety_checker": false,

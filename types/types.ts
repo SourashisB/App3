@@ -29,6 +29,7 @@ export interface APIResponse {
 export interface ImageContextType {
   savedImages: string[];
   addImage: (url: string) => void;
+  loadSavedImages: () => void;
 }
 
 export interface ImageProviderProps {

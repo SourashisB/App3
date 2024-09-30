@@ -2,17 +2,19 @@ var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
 var raw = JSON.stringify({
-   "key" : "89qz2rpqbf30b5",
-  "prompt": "ultra realistic close up portrait ((beautiful pale cyberpunk female with heavy black eyeliner))",
-  "negative_prompt": "bad quality",
-  "width": "512",
-  "height": "512",
-  "safety_checker": false,
-  "seed": null,
-  "samples":1,
-  "base64":false,
-  "webhook": null,
-  "track_id": null
+    "key": "89qz2rpqbf30b5",
+    "prompt": "green monster",
+    "negative_prompt": "bad quality",
+    "init_image": "https://modelslab-test-sour.s3.ap-southeast-2.amazonaws.com/uploads/istockphoto-1305617060-612x612.jpg",
+    "width": "512",
+    "height": "512",
+    "samples": "1",
+    "temp": false,
+    "safety_checker": false,
+    "strength":0.5,
+    "seed": null,
+    "webhook": null,
+    "track_id": null
 });
 
 var requestOptions = {
@@ -22,7 +24,7 @@ var requestOptions = {
   redirect: 'follow'
 };
 
-fetch("https://modelslab.com/api/v1/enterprise/realtime/text2img", requestOptions)
+fetch("https://modelslab.com/api/v1/enterprise/realtime/img2img", requestOptions)
   .then(response => response.text())
   .then(result => console.log(result))
   .catch(error => console.log('error', error));
