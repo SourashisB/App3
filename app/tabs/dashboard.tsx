@@ -25,12 +25,12 @@ const s3 = new AWS.S3();
 
 
 const prompts: PromptCardProps[] = [
-  { title: 'Sunset Background', image: require('../../assets/img_1.jpeg'), posts: 120, prompt: "Add snow and snowflakes to show winter" },
+  { title: 'Sunset Background', image: require('../../assets/img_1.jpeg'), posts: 120, prompt: "masterpiece,high resolution,winter-city,snow" },
   { title: 'Victorian 8-Bit', image: require('../../assets/img_2.jpeg'), posts: 233, prompt: "Change background to have a sunny day" },
-  { title: 'Cartoonify', image: require('../../assets/img_3.jpeg'), posts: 89, prompt: "Change style to be 8-bit pixel" },
-  { title: 'Make me a painting', image: require('../../assets/img_4.jpeg'), posts: 235, prompt: "Change style to be a painting" },
-  { title: 'Medieval Village', image: require('../../assets/img_5.jpeg'), posts: 479, prompt: "Change background to medieval village" },
-  { title: 'Cyberpunk', image: require('../../assets/img_6.jpeg'), posts: 150, prompt: "Change background to a cyberpunk futuristic city" },
+  { title: 'Cartoonify', image: require('../../assets/img_3.jpeg'), posts: 89, prompt: "masterpiece,8-bit,pixel art,portrait,solo" },
+  { title: 'Make me a painting', image: require('../../assets/img_4.jpeg'), posts: 235, prompt: "art-deco,conceptual-art,painting,oil-painting" },
+  { title: 'Randomized Magic Mix', image: require('../../assets/img_5.jpeg'), posts: 479, prompt: "Change background to medieval village" },
+  { title: 'Cyberpunk', image: require('../../assets/img_6.jpeg'), posts: 150, prompt: "masterpiece,high resolution,futuristic-city,solo,bubble design,city backround,night,neon,<lora:futuristic_city-xl:0.6>" },
 ];
 
 
@@ -125,7 +125,7 @@ const DashboardScreen: React.FC = () => {
       "key": "89qz2rpqbf30b5",
       "prompt": String(prompts[selectedPrompt].prompt),
       "negative_prompt": "bad quality",
-      "init_image": {imageUri},
+      "init_image": String({imageUri}),
       "samples": "1",
       "temp": false,
       "safety_checker": false,
