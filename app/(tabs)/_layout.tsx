@@ -6,9 +6,9 @@ export default function TabLayout() {
   return (
     <Tabs>
       <Tabs.Screen
-        name="dashboard"
+        name="imgToImgDash"
         options={{
-          title: 'Dashboard',
+          title: 'Image to Image',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="grid" color={color} size={size} />
           ),

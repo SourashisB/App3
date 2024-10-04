@@ -7,7 +7,6 @@ import { PromptCardProps, RequestOptions, APIResponse } from '../../types/types'
 import {Dimensions } from 'react-native';
 import AWS from 'aws-sdk';
 import 'react-native-get-random-values';
-import FastImage from 'react-native-fast-image';
 import {useImages} from '../ImageContext';
 
 
@@ -34,7 +33,7 @@ const prompts: PromptCardProps[] = [
 ];
 
 
-const DashboardScreen: React.FC = () => {
+const ImageToImageDash: React.FC = () => {
   const { addImage } = useImages();
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState<string | null>(null); 
@@ -155,8 +154,12 @@ const DashboardScreen: React.FC = () => {
     try {
       const response = await fetch("https://modelslab.com/api/v1/enterprise/realtime/img2img", requestOptions);
       const result: APIResponse = await response.json();
-      console.log(result)
-      console.log(result.status)
+      console.log(result);
+      console.log(result.status);
+      if (result.eta) {
+        const etaSeconds = parseInt(String(result.eta), 10);
+        await new Promise(resolve => setTimeout(resolve, etaSeconds * 1000));
+      }
       console.log(result.output[0].replace(/([^:]\/)\/+/g, "$1"));
       return result.output[0].replace(/([^:]\/)\/+/g, "$1");
     } catch (error) {
@@ -262,4 +265,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DashboardScreen;
+export default ImageToImageDash;

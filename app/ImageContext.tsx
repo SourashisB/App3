@@ -2,7 +2,6 @@
 
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import FastImage from 'react-native-fast-image';
 import { ImageProviderProps } from '@/types/types';
 
 interface ImageContextType {
@@ -33,17 +32,11 @@ export const ImageProvider: React.FC<ImageProviderProps> = ({ children }) => {
     }
   };
 
-  const preFetchImages = (images: string[]) => {
-    const imagesToPrefetch = images.map(url => ({ uri: url }));
-    FastImage.preload(imagesToPrefetch);
-  };
-
   const addImage = async (url: string) => {
     try {
       const newSavedImages = [url, ...savedImages];
       await AsyncStorage.setItem('savedImages', JSON.stringify(newSavedImages));
       setSavedImages(newSavedImages);
-      preFetchImages([url]);
     } catch (error) {
       console.error('Failed to save image:', error);
     }

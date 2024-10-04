@@ -1,3 +1,4 @@
+import { integer } from 'aws-sdk/clients/cloudfront';
 import {ReactNode} from 'react';
 
 export interface PromptCardProps {
@@ -24,6 +25,7 @@ export interface APIResponse {
   id: number;
   output: string[];
   meta: Record<string, any>;
+  eta: integer;
 }
 
 export interface ImageContextType {

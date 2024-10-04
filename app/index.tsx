@@ -62,7 +62,9 @@ const HomeScreen: React.FC = () => {
       setIsLoading(true);
       // After loading, navigate to dashboard
       setTimeout(() => {
-        router.replace('/tabs/dashboard');
+        router.replace({
+          pathname: '/main-dashboard',
+        });
       }, 600);
     }, 600);
   };
